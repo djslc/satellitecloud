@@ -1,0 +1,5 @@
+= Introduction =
+
+This development is an extension of my work to port the Norad SGP4 and SDP4 satellite prediction algorithms to Java which can be found in the [http://code.google.com/p/predict4java predict4java] project, which is also hosted on Google Code.
+
+It is to a large extent, a learning platform for me so that I can get experience of the various Google development and run-time tools.
