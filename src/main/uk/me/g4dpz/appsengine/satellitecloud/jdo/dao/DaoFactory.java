@@ -47,6 +47,10 @@ public class DaoFactory {
         return factory.createSatelliteGroupDao();
     }
 
+    public static SourceFileDao createSourceFileDao() {
+        return factory.createSourceFileDao();
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////
     // Inner classes
@@ -57,6 +61,8 @@ public class DaoFactory {
         public abstract SatelliteElementDao createSatelliteElementDao();
 
         public abstract SatelliteGroupDao createSatelliteGroupDao();
+
+        public abstract SourceFileDao createSourceFileDao();
 
     }
 }

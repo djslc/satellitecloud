@@ -24,9 +24,9 @@ import com.spoledge.audao.db.dao.gae.GaeAbstractDaoImpl;
 import com.spoledge.audao.db.dao.DBException;
 import com.spoledge.audao.db.dao.DaoException;
 
-import uk.me.g4dpz.appsengine.satellitecloud.jdo.dao.SatelliteGroupDao;
-import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.SatelliteGroup;
-import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.gae.SatelliteGroupImpl;
+import uk.me.g4dpz.appsengine.satellitecloud.jdo.dao.SourceFileDao;
+import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.SourceFile;
+import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.gae.SourceFileImpl;
 
 
 /**
@@ -34,9 +34,9 @@ import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.gae.SatelliteGroupImpl;
  *
  * @author generated
  */
-public class SatelliteGroupDaoImpl extends GaeAbstractDaoImpl<SatelliteGroup> implements SatelliteGroupDao {
+public class SourceFileDaoImpl extends GaeAbstractDaoImpl<SourceFile> implements SourceFileDao {
 
-    public SatelliteGroupDaoImpl( PersistenceManager pm ) {
+    public SourceFileDaoImpl( PersistenceManager pm ) {
         super( pm );
     }
 
@@ -44,11 +44,11 @@ public class SatelliteGroupDaoImpl extends GaeAbstractDaoImpl<SatelliteGroup> im
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public SatelliteGroup findByPrimaryKey( long id ) {
-        SatelliteGroupImpl impl = null;
+    public SourceFile findByPrimaryKey( long id ) {
+        SourceFileImpl impl = null;
 
         try {
-            impl = pm.getObjectById( SatelliteGroupImpl.class, id);
+            impl = pm.getObjectById( SourceFileImpl.class, id);
         }
         catch (JDOObjectNotFoundException _e) {}
 
@@ -58,21 +58,21 @@ public class SatelliteGroupDaoImpl extends GaeAbstractDaoImpl<SatelliteGroup> im
     /**
      * Finds a record.
      */
-    public SatelliteGroup findByName( String name ) {
+    public SourceFile findByName( String name ) {
         return findOne( "name == :_name", name);
     }
 
     /**
-     * Counts records using index inx_satgrp_name.
+     * Counts records using index inx_sourcefile_name.
      */
     public int countByName( String name ) {
         return count( "name == :_name", name);
     }
 
     /**
-     * Finds records using index inx_satgrp_name.
+     * Finds records using index inx_sourcefile_name.
      */
-    public SatelliteGroup findByName( int offset, int count, String name ) {
+    public SourceFile findByName( int offset, int count, String name ) {
         return findOne( "name == :_name", name);
     }
 
@@ -80,7 +80,7 @@ public class SatelliteGroupDaoImpl extends GaeAbstractDaoImpl<SatelliteGroup> im
      * Deletes records.
      * @return the number of records deleted
      */
-    public int deleteSatelliteGroup( String name ) throws DaoException {
+    public int deleteSourceFile( String name ) throws DaoException {
         return deleteMany( "[CDATA[name=?]]", name);
     }
 
@@ -88,24 +88,22 @@ public class SatelliteGroupDaoImpl extends GaeAbstractDaoImpl<SatelliteGroup> im
      * Inserts a new record.
      * @return the generated primary key - id
      */
-    public long insert( SatelliteGroup dto ) throws DaoException {
+    public long insert( SourceFile dto ) throws DaoException {
 
         debugSql( "insert", dto );
 
         try {
-            SatelliteGroupImpl impl = new SatelliteGroupImpl();
+            SourceFileImpl impl = new SourceFileImpl();
 
             if ( dto.getName() != null ) {
                 checkMaxLength( "name", dto.getName(), 255 );
             }
             impl.setName( dto.getName());
 
-            if ( dto.getSourceId() == null ) {
-                // none for GAE
+            if ( dto.getUrl() != null ) {
+                checkMaxLength( "url", dto.getUrl(), 255 );
             }
-            else {
-                impl.setSourceId( dto.getSourceId());
-            }
+            impl.setUrl( dto.getUrl());
 
             pm.makePersistent( impl );
 
@@ -128,23 +126,23 @@ public class SatelliteGroupDaoImpl extends GaeAbstractDaoImpl<SatelliteGroup> im
     }
 
     protected Query getQuery() {
-        return pm.newQuery( SatelliteGroupImpl.class );
+        return pm.newQuery( SourceFileImpl.class );
     }
 
-    protected SatelliteGroup fetch( Query q, Object... params ) {
-        SatelliteGroupImpl impl = (SatelliteGroupImpl) execute( q, params );
+    protected SourceFile fetch( Query q, Object... params ) {
+        SourceFileImpl impl = (SourceFileImpl) execute( q, params );
 
         return impl != null ? impl._getDto() : null;
     }
 
-    protected SatelliteGroup[] fetchArray( Query q, Object... params ) {
+    protected SourceFile[] fetchArray( Query q, Object... params ) {
         List<?> list = (List<?>) execute( q, params );
 
-        SatelliteGroup[] ret = new SatelliteGroup[ list.size() ];
+        SourceFile[] ret = new SourceFile[ list.size() ];
 
         int index=0;
         for ( Object o : list ) {
-            SatelliteGroupImpl impl = (SatelliteGroupImpl) o;
+            SourceFileImpl impl = (SourceFileImpl) o;
             ret[ index++ ] = impl._getDto();
         }
 
