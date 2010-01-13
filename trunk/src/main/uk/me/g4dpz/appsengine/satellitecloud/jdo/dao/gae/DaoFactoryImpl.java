@@ -37,4 +37,8 @@ public class DaoFactoryImpl extends DaoFactory.Factory {
         return new SatelliteGroupDaoImpl( getPersistenceManager() );
     }
 
+    public SourceFileDao createSourceFileDao() {
+        return new SourceFileDaoImpl( getPersistenceManager() );
+    }
+
 }

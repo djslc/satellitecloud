@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.spoledge.audao.db.dao.AbstractDao;
 import com.spoledge.audao.db.dao.DaoException;
 
-import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.SatelliteGroup;
+import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.SourceFile;
 
 
 /**
@@ -19,39 +19,39 @@ import uk.me.g4dpz.appsengine.satellitecloud.jdo.dto.SatelliteGroup;
  *
  * @author generated
  */
-public interface SatelliteGroupDao extends AbstractDao {
+public interface SourceFileDao extends AbstractDao {
 
     /**
      * Finds a record identified by its primary key.
      * @return the record found or null
      */
-    public SatelliteGroup findByPrimaryKey( long id );
+    public SourceFile findByPrimaryKey( long id );
 
     /**
      * Finds a record.
      */
-    public SatelliteGroup findByName( String name );
+    public SourceFile findByName( String name );
 
     /**
-     * Counts records using index inx_satgrp_name.
+     * Counts records using index inx_sourcefile_name.
      */
     public int countByName( String name );
 
     /**
-     * Finds records using index inx_satgrp_name.
+     * Finds records using index inx_sourcefile_name.
      */
-    public SatelliteGroup findByName( int offset, int count, String name );
+    public SourceFile findByName( int offset, int count, String name );
 
     /**
      * Deletes records.
      * @return the number of records deleted
      */
-    public int deleteSatelliteGroup( String name ) throws DaoException;
+    public int deleteSourceFile( String name ) throws DaoException;
 
     /**
      * Inserts a new record.
      * @return the generated primary key - id
      */
-    public long insert( SatelliteGroup dto ) throws DaoException;
+    public long insert( SourceFile dto ) throws DaoException;
 
 }

@@ -58,7 +58,8 @@
 					<type max-length="255">String</type> 
 				</column>
 				<column name="sourceId"> 
-					<type>long</type> 
+					<ref table="SourceFile"
+						column="id"/>
 				</column>
 			</columns>
 			<indexes> 
@@ -77,6 +78,54 @@
 					<range/> 
 					<index name="inx_satgrp_name"/> 
 				</find> 
+				<delete name="SatelliteGroup"> 
+					<condition>
+				        <query>[CDATA[name=?]]</query>
+				        <params>
+				          <column name="name"/>
+				        </params>
+				      </condition>
+				</delete> 
+			</methods> 
+		</table>
+		<table name="SourceFile">
+			<columns>
+				<column name="id"> 
+					<type>long</type> 
+					<auto/> 
+					<pk/>
+				</column>
+				<column name="name"> 
+					<type max-length="255">String</type> 
+				</column>
+				<column name="url"> 
+					<type max-length="255">String</type> 
+				</column>
+			</columns>
+			<indexes> 
+				<index name="inx_sourcefile_name"> 
+					<unique/> 
+					<columns> 
+						<column name="name"/> 
+					</columns> 
+				</index> 
+			</indexes>  
+			<methods> 
+				<count> 
+					<index name="inx_sourcefile_name"/> 
+				</count> 
+				<find> 
+					<range/> 
+					<index name="inx_sourcefile_name"/> 
+				</find> 
+				<delete name="SourceFile"> 
+					<condition>
+				        <query>[CDATA[name=?]]</query>
+				        <params>
+				          <column name="name"/>
+				        </params>
+				      </condition>
+				</delete> 
 			</methods> 
 		</table>
 	</tables>
