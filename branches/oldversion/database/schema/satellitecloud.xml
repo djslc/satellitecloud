@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0"> 
+	<tables> 
+		<auto-find/>
+		<table name="SatelliteElement">
+			<columns>
+				<column name="id"> 
+					<type>long</type> 
+					<auto/> 
+					<pk/>
+				</column>
+				<column name="catalogueNumber"> 
+					<type>long</type> 
+				</column>
+				<column name="elementSet"> 
+					<type>long</type> 
+				</column>
+				<column name="groupId"> 
+					<ref table="SatelliteGroup"
+						column="id"/>
+				</column>
+			</columns>
+			<indexes> 
+				<index name="inx_satel_catno"> 
+					<unique/> 
+					<columns> 
+						<column name="catalogueNumber"/> 
+					</columns> 
+				</index> 
+			</indexes>  
+			
+			<methods> 
+				<count> 
+					<index name="inx_satel_catno"/> 
+				</count> 
+				<find> 
+					<range/> 
+					<index name="inx_satel_catno"/> 
+				</find> 
+				<delete name="Satellite"> 
+					<condition>
+				        <query>[CDATA[catalogueNumber=?]]</query>
+				        <params>
+				          <column name="catalogueNumber"/>
+				        </params>
+				      </condition>
+				</delete> 
+			</methods> 
+		</table>
+		<table name="SatelliteGroup">
+			<columns>
+				<column name="id"> 
+					<type>long</type> 
+					<auto/> 
+					<pk/>
+				</column>
+				<column name="name"> 
+					<type max-length="255">String</type> 
+				</column>
+				<column name="sourceId"> 
+					<ref table="SourceFile"
+						column="id"/>
+				</column>
+			</columns>
+			<indexes> 
+				<index name="inx_satgrp_name"> 
+					<unique/> 
+					<columns> 
+						<column name="name"/> 
+					</columns> 
+				</index> 
+			</indexes>  
+			<methods> 
+				<count> 
+					<index name="inx_satgrp_name"/> 
+				</count> 
+				<find> 
+					<range/> 
+					<index name="inx_satgrp_name"/> 
+				</find> 
+				<delete name="SatelliteGroup"> 
+					<condition>
+				        <query>[CDATA[name=?]]</query>
+				        <params>
+				          <column name="name"/>
+				        </params>
+				      </condition>
+				</delete> 
+			</methods> 
+		</table>
+		<table name="SourceFile">
+			<columns>
+				<column name="id"> 
+					<type>long</type> 
+					<auto/> 
+					<pk/>
+				</column>
+				<column name="name"> 
+					<type max-length="255">String</type> 
+				</column>
+				<column name="url"> 
+					<type max-length="255">String</type> 
+				</column>
+			</columns>
+			<indexes> 
+				<index name="inx_sourcefile_name"> 
+					<unique/> 
+					<columns> 
+						<column name="name"/> 
+					</columns> 
+				</index> 
+			</indexes>  
+			<methods> 
+				<count> 
+					<index name="inx_sourcefile_name"/> 
+				</count> 
+				<find> 
+					<range/> 
+					<index name="inx_sourcefile_name"/> 
+				</find> 
+				<delete name="SourceFile"> 
+					<condition>
+				        <query>[CDATA[name=?]]</query>
+				        <params>
+				          <column name="name"/>
+				        </params>
+				      </condition>
+				</delete> 
+			</methods> 
+		</table>
+	</tables>
+</database>
