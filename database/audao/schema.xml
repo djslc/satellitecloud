@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database xmlns="http://www.spoledge.com/audao" version="1.0">
+
+	<config>
+		<factory>
+			<create-params default="false" direct="true"/>
+		</factory>
+	</config>
+
+	<tables>
+		<table name="KeplerianElement">
+			<edit-mode>column</edit-mode>
+			<auto-find/>
+			<columns>
+				<column name="catalogueNumber">
+					<type>long</type>
+					<pk/>
+				</column>
+				<column name="name">
+					<type max-length="20">String</type>
+					<not-null/>
+					<edit/>
+				</column>
+				<column name="createdDate">
+					<type>Date</type>
+					<auto/>
+					<not-null/>
+					<edit/>
+				</column>
+				<column name="elementSet">
+					<type>long</type>
+					<not-null/>
+					<edit/>
+				</column>
+			</columns>
+			<indexes>
+				<index name="catalogueNumber_idx">
+					<unique/>
+					<columns>
+						<column name="catalogueNumber"/>
+					</columns>
+				</index>
+				<index name="name_idx">
+					<unique/>
+					<columns>
+						<column name="name"/>
+					</columns>
+				</index>
+			</indexes>
+		</table>
+	</tables>
+</database>
+
