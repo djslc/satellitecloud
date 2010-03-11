@@ -1,5 +1,6 @@
 package uk.me.g4dpz.gae.satellitecloud.persistence;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,7 +9,9 @@ import javax.persistence.Id;
 import uk.me.g4dpz.satellite.TLE;
 
 @Entity
-public class SatelliteElementSet {
+public class SatelliteElementSet implements Serializable {
+	
+	private static final long serialVersionUID = -8352791841591549854L;
 	
 	@Id
 	private Long catalogNumber;

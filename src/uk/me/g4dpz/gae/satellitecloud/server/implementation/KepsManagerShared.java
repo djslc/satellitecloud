@@ -16,12 +16,13 @@ import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.StringUtils;
 
-import uk.me.g4dpz.gae.satellitecloud.persistence.Cache;
 import uk.me.g4dpz.gae.satellitecloud.persistence.SatelliteElementSet;
 import uk.me.g4dpz.satellite.TLE;
 
 import com.google.appengine.api.mail.MailService;
 import com.google.appengine.api.mail.MailServiceFactory;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.appengine.api.memcache.MemcacheService;
 
 public class KepsManagerShared {
 	
@@ -30,13 +31,9 @@ public class KepsManagerShared {
 	private static final Logger LOGGER = Logger.getLogger(KepsManagerShared.class.getName());
 	private static final String NEW_LINE = "\n";
 	private static final int MAX_CACHE_SIZE = 100;
-	private static Cache<Long, SatelliteElementSet> cache;
+	private MemcacheService memcacheService = null;
 	
 	private static SimpleTimeZone TZ = new SimpleTimeZone(0, "UTC");
-	
-	static {
-		cache = new Cache<Long, SatelliteElementSet>(new UTCClock(), MAX_CACHE_SIZE);
-	}
 	
 	public KepsManagerShared() {
 	}
@@ -82,6 +79,10 @@ public class KepsManagerShared {
         		throw new IllegalArgumentException(
         			"Tried to use: " + id + AS_SITE_ID_FOR_DOWLOADING_KEPS);
         	}
+        	
+        	if (null == memcacheService) {
+        		memcacheService = MemcacheServiceFactory.getMemcacheService();
+        	}
     		
         	elementSets = parseTLE(url);
     		
@@ -103,7 +104,7 @@ public class KepsManagerShared {
     			
     			tx.begin();
     			
-    			SatelliteElementSet cachedSatSet = cache.get(satSet.getCatalogNumber());
+    			SatelliteElementSet cachedSatSet = (SatelliteElementSet)memcacheService.get(satSet.getCatalogNumber());
     			if (null == cachedSatSet) {
     				msgBody += ("Satellite: " + satSet.getName() + " was not in cache"+ NEW_LINE);
     				SatelliteElementSet satSetDb = em.find(SatelliteElementSet.class, Long.valueOf(satSet.getCatalogNumber()));
@@ -115,23 +116,23 @@ public class KepsManagerShared {
         			} else {
         				msgBody += ("Satellite: " + satSet.getName() + " was in database"+ NEW_LINE);
         				msgBody += ("Comparing satSet for: " + satSet.getName() + " with tle on SetNum: " + satSetDb.getSetNumber() + ", " + satSet.getSetNumber() + NEW_LINE);
-        				if (satSetDb.getSetNumber().intValue() != satSet.getSetNumber()) {
+        				if (satSetDb.getSetNumber().longValue() != satSet.getSetNumber().longValue()) {
     	    				satSetDb.update(satSet, Calendar.getInstance(zone).getTime());
     	        			em.merge(satSetDb);
     	    				em.flush();
     	    				msgBody += ("Updated satellite: " + satSet.getName() + NEW_LINE);
         				}
         			}
-					cache.put(satSet.getCatalogNumber(), satSet);
+    				memcacheService.put(satSet.getCatalogNumber(), satSet);
     			} else {
     				msgBody += ("Satellite: " + satSet.getName() + " was in cache"+ NEW_LINE);
     				msgBody += ("Comparing satSet for: " + satSet.getName() + " with tle on SetNum: " + cachedSatSet.getSetNumber() + ", " + satSet.getSetNumber() + NEW_LINE);
-    				if (cachedSatSet.getSetNumber() != satSet.getSetNumber()) {
+    				if (cachedSatSet.getSetNumber().longValue() != satSet.getSetNumber().longValue()) {
 	    				cachedSatSet.update(satSet, Calendar.getInstance(zone).getTime());
 	        			em.merge(cachedSatSet);
 	    				em.flush();
 	    				msgBody += ("Updated satellite: " + satSet.getName() + NEW_LINE);
-	    				cache.put(satSet.getCatalogNumber(), satSet);
+	    				memcacheService.put(satSet.getCatalogNumber(), satSet);
     				}
     			}
     			
@@ -188,7 +189,7 @@ public class KepsManagerShared {
      * @throws IOException
      *             problem processing the file
      */
-    public static List<SatelliteElementSet> parseTLE(String urlString) throws IOException
+    public List<SatelliteElementSet> parseTLE(String urlString) throws IOException
     {
         List<SatelliteElementSet> elementSets = new ArrayList<SatelliteElementSet>();
         BufferedReader reader = null;
@@ -241,7 +242,7 @@ public class KepsManagerShared {
         return elementSets;
     }
 
-	public static TLE getTLE(Long catNum) {
+	public TLE getTLE(Long catNum) {
 		
 		TLE tle = null;
 		EntityTransaction tx = null;
@@ -267,7 +268,7 @@ public class KepsManagerShared {
     			throw new NullPointerException("Could not create Transaction");
     		}
 			
-			SatelliteElementSet satSet = cache.get(catNum);
+			SatelliteElementSet satSet = (SatelliteElementSet)memcacheService.get(catNum);
 			
 			if (null == satSet) {
 				
@@ -278,7 +279,7 @@ public class KepsManagerShared {
 				if (null == satSet) {
 	    			throw new NullPointerException("TLE was not found in cache or database");
 				} else {
-					cache.put(catNum, satSet);
+					memcacheService.put(catNum, satSet);
 				}
 				
 				tx.commit();
