@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/cron/keps/celestrak/amateur.txt</url>
+    <description>Repopulate the amateur radio keps from celestrak every hour</description>
+    <schedule>every 1 hours</schedule>
+  </cron>
+  <cron>
+    <url>/cron/keps/celestrak/cubesat.txt</url>
+    <description>Repopulate the cubesat keps from celestrak every hour</description>
+    <schedule>every 1 hours</schedule>
+  </cron>
+</cronentries>
