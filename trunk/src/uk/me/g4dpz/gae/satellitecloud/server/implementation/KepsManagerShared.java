@@ -116,7 +116,7 @@ public class KepsManagerShared {
         			} else {
         				msgBody += ("Satellite: " + satSet.getName() + " was in database"+ NEW_LINE);
         				msgBody += ("Comparing satSet for: " + satSet.getName() + " with tle on SetNum: " + satSetDb.getSetNumber() + ", " + satSet.getSetNumber() + NEW_LINE);
-        				if (satSetDb.getSetNumber().longValue() != satSet.getSetNumber().longValue()) {
+        				if (satSet.getSetNumber().longValue() > satSetDb.getSetNumber().longValue()) {
     	    				satSetDb.update(satSet, Calendar.getInstance(zone).getTime());
     	        			em.merge(satSetDb);
     	    				em.flush();
@@ -127,7 +127,7 @@ public class KepsManagerShared {
     			} else {
     				msgBody += ("Satellite: " + satSet.getName() + " was in cache"+ NEW_LINE);
     				msgBody += ("Comparing satSet for: " + satSet.getName() + " with tle on SetNum: " + cachedSatSet.getSetNumber() + ", " + satSet.getSetNumber() + NEW_LINE);
-    				if (cachedSatSet.getSetNumber().longValue() != satSet.getSetNumber().longValue()) {
+    				if (satSet.getSetNumber().longValue() > cachedSatSet.getSetNumber().longValue()) {
 	    				cachedSatSet.update(satSet, Calendar.getInstance(zone).getTime());
 	        			em.merge(cachedSatSet);
 	    				em.flush();
