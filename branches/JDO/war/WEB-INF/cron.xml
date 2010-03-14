@@ -11,28 +11,8 @@
     <schedule>every 1 hours</schedule>
   </cron>
   <cron>
-    <url>/cron/keps/celestrak/dmc.txt</url>
-    <description>Repopulate the disaster monitoring keps from celestrak every hour</description>
-    <schedule>every 1 hours</schedule>
-  </cron>
-  <cron>
     <url>/cron/keps/celestrak/education.txt</url>
     <description>Repopulate the education keps from celestrak every hour</description>
-    <schedule>every 1 hours</schedule>
-  </cron>
-  <cron>
-    <url>/cron/keps/celestrak/engineering.txt</url>
-    <description>Repopulate the engineering keps from celestrak every hour</description>
-    <schedule>every 1 hours</schedule>
-  </cron>
-  <cron>
-    <url>/cron/keps/celestrak/galileo.txt</url>
-    <description>Repopulate the galileo keps from celestrak every hour</description>
-    <schedule>every 1 hours</schedule>
-  </cron>
-  <cron>
-    <url>/cron/keps/celestrak/geo.txt</url>
-    <description>Repopulate the geostationary keps from celestrak every hour</description>
     <schedule>every 1 hours</schedule>
   </cron>
 </cronentries>
