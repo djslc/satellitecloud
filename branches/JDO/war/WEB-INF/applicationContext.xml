@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"	
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+    default-lazy-init="false">
+		
+	<context:annotation-config />
+	<context:component-scan base-package="uk.me.g4dpz.gae.satellitecloud.server.implementation" />
+	
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<import  resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml"/>
+    
+    <jaxrs:server id="kepsManagerCron" address="/keps">
+		<jaxrs:serviceBeans>
+			<ref bean="kepsManagerRest" />
+		</jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+            <entry key="xml" value="application/xml" />
+        </jaxrs:extensionMappings>
+	</jaxrs:server>
+
+	<bean id="kepsManagerRest" class="uk.me.g4dpz.gae.satellitecloud.server.rest.KepsManagerRest"/>
+
+	<bean id="kepsManagerShared" class="uk.me.g4dpz.gae.satellitecloud.server.implementation.KepsManagerShared"/>
+	
+	
+	
+
+</beans>
