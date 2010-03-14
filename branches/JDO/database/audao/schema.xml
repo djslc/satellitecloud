@@ -8,42 +8,48 @@
 	</config>
 
 	<tables>
-		<table name="KeplerianElement">
-			<edit-mode>column</edit-mode>
+		<table name="SatelliteElementSet">
 			<auto-find/>
 			<columns>
-				<column name="catalogueNumber">
+				<column name="catalogNumber">
 					<type>long</type>
 					<pk/>
 				</column>
 				<column name="name">
-					<type max-length="20">String</type>
+					<type max-length="30">String</type>
+					<not-null/>
+					<edit/>
+				</column>
+				<column name="line1">
+					<type max-length="80">String</type>
+					<not-null/>
+					<edit/>
+				</column>
+				<column name="line2">
+					<type max-length="80">String</type>
+					<not-null/>
+					<edit/>
+				</column>
+				<column name="setNumber">
+					<type>long</type>
 					<not-null/>
 					<edit/>
 				</column>
 				<column name="createdDate">
 					<type>Date</type>
-					<auto/>
 					<not-null/>
 					<edit/>
 				</column>
-				<column name="elementSet">
-					<type>long</type>
-					<not-null/>
+				<column name="updatedDate">
+					<type>Date</type>
 					<edit/>
 				</column>
 			</columns>
 			<indexes>
-				<index name="catalogueNumber_idx">
+				<index name="catalogNumber_idx">
 					<unique/>
 					<columns>
-						<column name="catalogueNumber"/>
-					</columns>
-				</index>
-				<index name="name_idx">
-					<unique/>
-					<columns>
-						<column name="name"/>
+						<column name="catalogNumber"/>
 					</columns>
 				</index>
 			</indexes>
