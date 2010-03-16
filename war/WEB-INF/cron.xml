@@ -15,4 +15,9 @@
     <description>Repopulate the education keps from celestrak every hour</description>
     <schedule>every 1 hours</schedule>
   </cron>
+  <cron>
+    <url>/cron/predict/48/30</url>
+    <description>Do predictions for next 48 hours. At 30 second intervals</description>
+    <schedule>every 24 hours</schedule>
+  </cron>
 </cronentries>
