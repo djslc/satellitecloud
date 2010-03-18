@@ -20,18 +20,18 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<import  resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml"/>
     
-    <jaxrs:server id="kepsManagerCron" address="/keps">
+    <jaxrs:server id="satelliteManagerCron" address="/satellite">
 		<jaxrs:serviceBeans>
-			<ref bean="kepsManagerRest" />
+			<ref bean="satelliteManagerRest" />
 		</jaxrs:serviceBeans>
         <jaxrs:extensionMappings>
             <entry key="xml" value="application/xml" />
         </jaxrs:extensionMappings>
 	</jaxrs:server>
 
-	<bean id="kepsManagerRest" class="uk.me.g4dpz.gae.satellitecloud.server.rest.KepsManagerRest"/>
+	<bean id="satelliteManagerRest" class="uk.me.g4dpz.gae.satellitecloud.server.rest.SatelliteManagerRest"/>
 
-	<bean id="kepsManagerShared" class="uk.me.g4dpz.gae.satellitecloud.server.implementation.KepsManagerShared"/>
+	<bean id="satelliteManagerShared" class="uk.me.g4dpz.gae.satellitecloud.server.implementation.SatelliteManagerShared"/>
 	
 	
 	

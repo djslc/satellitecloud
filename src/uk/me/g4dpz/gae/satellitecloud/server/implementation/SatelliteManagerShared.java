@@ -25,17 +25,20 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Transaction;
 import com.google.appengine.api.mail.MailService;
 import com.google.appengine.api.mail.MailServiceFactory;
+import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.spoledge.audao.db.dao.DaoException;
 
-public class KepsManagerShared {
+public class SatelliteManagerShared {
 	
     private static final String AS_SITE_ID_FOR_DOWLOADING_KEPS = " as site id for dowloading KEPS";
 	private static final String BADGERJOHNSON_GMAIL_COM = "badgerjohnson@googlemail.com";
-	private static final Logger LOGGER = Logger.getLogger(KepsManagerShared.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(SatelliteManagerShared.class.getName());
 	private static final String NEW_LINE = "\n";
+	private static final int KEPS_EXPIRY = 7200;
 	private MemcacheService satelliteCacheService;
+	private MemcacheService predictionCacheService;
 	private DaoFactoryImpl daoFactory;
 	private DatastoreService ds;
 	private SatelliteElementSetDao satelliteElementSetDao;
@@ -45,7 +48,7 @@ public class KepsManagerShared {
 	
 	private static SimpleTimeZone TZ = new SimpleTimeZone(0, "UTC");
 	
-	public KepsManagerShared() {
+	public SatelliteManagerShared() {
 		daoFactory = new DaoFactoryImpl();
 		ds = DatastoreServiceFactory.getDatastoreService();
 		satelliteElementSetDao = daoFactory.createSatelliteElementSetDao(ds);
@@ -195,7 +198,7 @@ public class KepsManagerShared {
 		lines[1] = satSet.getLine1();
 		lines[2] = satSet.getLine2();
 		Satellite satellite = SatelliteFactory.createSatellite(new TLE(lines));
-		satelliteCacheService.put(satSet.getCatalogNumber(), satellite);
+		satelliteCacheService.put(satSet.getCatalogNumber(), satellite, Expiration.byDeltaSeconds(KEPS_EXPIRY));
 	}
 
 	private String reportError(final Exception e, final String msgBody) {
@@ -277,5 +280,22 @@ public class KepsManagerShared {
         
         return elementSets;
     }
+
+	public Boolean preLoadSatellitePredictions(String hours, String seconds) {
+		
+		StringBuilder sb = new StringBuilder("Preloading satellite predictions: ").append(NEW_LINE);
+		
+		if (null == predictionCacheService) {
+			predictionCacheService = MemcacheServiceFactory.getMemcacheService();
+			sb.append("Creating new prediction cache");
+		} else {
+			predictionCacheService.clearAll();
+			sb.append("Clearing prediction cache");
+		}
+		
+		sendMailMessage(sb.toString());
+		
+		return true;
+	}
 
 }

@@ -13,20 +13,20 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import uk.me.g4dpz.gae.satellitecloud.server.implementation.KepsManagerShared;
+import uk.me.g4dpz.gae.satellitecloud.server.implementation.SatelliteManagerShared;
 
 @Produces("application/xml")
 @Component
-public class KepsManagerRest {
+public class SatelliteManagerRest {
 	
 	@Autowired
-	KepsManagerShared kepsManagerShared;
+	SatelliteManagerShared satelliteManagerShared;
 
-	public KepsManagerRest() {
+	public SatelliteManagerRest() {
 	}
 	
 	@GET
-    @Path("/{id}")
+    @Path("/keps/{id}")
     public Response loadKeps(
             @Context final Request request,
             @Context final HttpHeaders headers,
@@ -36,14 +36,28 @@ public class KepsManagerRest {
 	}
 	
 	@GET
-    @Path("/{id}/{file}")
+    @Path("/keps/{id}/{file}")
     public Response loadKeps(
             @Context final Request request,
             @Context final HttpHeaders headers,
             @PathParam("id") final String id,
             @PathParam("file") final String file) {
 		
-		final ResponseBuilder responseBuilder = Response.ok(kepsManagerShared.loadKeps(id, file));
+		final ResponseBuilder responseBuilder = Response.ok(satelliteManagerShared.loadKeps(id, file));
+		
+		return responseBuilder.build();
+	}
+	
+	@GET
+    @Path("/predict/{hours}/{seconds}")
+    public Response preLoadSatellitePredictions(
+            @Context final Request request,
+            @Context final HttpHeaders headers,
+            @PathParam("hours") final String hours,
+            @PathParam("seconds") final String seconds) {
+		
+		final ResponseBuilder responseBuilder 
+			= Response.ok(satelliteManagerShared.preLoadSatellitePredictions(hours, seconds));
 		
 		return responseBuilder.build();
 	}

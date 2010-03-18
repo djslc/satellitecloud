@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/cron/keps/celestrak/amateur.txt</url>
+    <url>/cron/satellite/keps/celestrak/amateur.txt</url>
     <description>Repopulate the amateur radio keps from celestrak every hour</description>
     <schedule>every 1 hours</schedule>
   </cron>
   <cron>
-    <url>/cron/keps/celestrak/cubesat.txt</url>
+    <url>/cron/satellite/keps/celestrak/cubesat.txt</url>
     <description>Repopulate the cubesat keps from celestrak every hour</description>
     <schedule>every 1 hours</schedule>
   </cron>
   <cron>
-    <url>/cron/keps/celestrak/education.txt</url>
+    <url>/cron/satellite/keps/celestrak/education.txt</url>
     <description>Repopulate the education keps from celestrak every hour</description>
     <schedule>every 1 hours</schedule>
   </cron>
   <cron>
-    <url>/cron/predict/48/30</url>
-    <description>Do predictions for next 48 hours. At 30 second intervals</description>
+    <url>/cron/satellite/predict/48/30</url>
+    <description>Pre-load memCache predictions for next 48 hours. At 30 second intervals</description>
     <schedule>every 24 hours</schedule>
   </cron>
 </cronentries>
