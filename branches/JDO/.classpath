@@ -31,6 +31,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/xercesImpl-2.9.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/XmlSchema-1.4.5.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-portlets.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/predict4java_1.1.85.12.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/predict4java_1.1.85.13.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
